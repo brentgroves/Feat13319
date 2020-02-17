@@ -37,7 +37,7 @@
         "database" : "Kors"
       }
   },
-  "mach2": "mysql://brent:JesusLives1!@10.1.0.100/mach2",
+  "mach2": "mysql://brent:JesusLives1!@127.0.0.1/mach2",
   "mysql": {
     "client": "mysql",
     "connection": "mysql://brent:JesusLives1!@127.0.0.1/mach2"

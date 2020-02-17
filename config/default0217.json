@@ -1,5 +1,5 @@
 {
-  "host": "localhost",
+  "host": "10.1.0.100",
   "port": 3030,
   "public": "../public/",
   "paginate": {
@@ -37,7 +37,7 @@
         "database" : "Kors"
       }
   },
-  "mach2": "mysql://brent:JesusLives1!@10.1.0.100/mach2",
+  "mach2": "mysql://brent:JesusLives1!@127.0.0.1/mach2",
   "mysql": {
     "client": "mysql",
     "connection": "mysql://brent:JesusLives1!@127.0.0.1/mach2"

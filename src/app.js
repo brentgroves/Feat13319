@@ -18,9 +18,6 @@ const channels = require('./channels');
 
 const authentication = require('./authentication');
 
-const objection = require('./objection');
-
-
 const sequelize = require('./sequelize');
 
 
@@ -41,9 +38,6 @@ app.use('/', express.static(app.get('public')));
 // Set up Plugins and providers
 app.configure(express.rest());
 app.configure(socketio());
-
-app.configure(objection);
-
 
 app.configure(sequelize);
 
