@@ -1,7 +1,17 @@
 const Sequelize = require('sequelize');
 
 module.exports = function (app) {
-  const connectionString = app.get('mach2');
+//  const connectionString = app.get('mach2');
+  //const connectionString = process.env.MYSQL_CONNECT || "mysql://brent:JesusLives1!@localhost/mach2";
+  const {
+    MYSQL_USERNAME,
+    MYSQL_PASSWORD,
+    MYSQL_HOSTNAME,
+    MYSQL_DATABASE
+  } = process.env;
+
+  const connectionString = `mysql://${MYSQL_USERNAME}:${MYSQL_PASSWORD}@${MYSQL_HOSTNAME}/${MYSQL_DATABASE}`;
+console.log(`connectionString: ${connectionString}`)
   const sequelize = new Sequelize(connectionString, {
     dialect: 'mysql',
     logging: false,

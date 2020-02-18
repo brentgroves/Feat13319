@@ -11,13 +11,28 @@ exports.Sproc200206 = class Sproc200206 {
     const {$tableName,$limit,$skip} = params.query;
     console.log(params)
     try {
+
+      const {
+        MSSQL_USER,
+        MSSQL_PASSWORD,
+        MSSQL_DATABASE,
+        MSSQL_SERVER
+      } = process.env;
+      console.log(`user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`)
+      let pool = await sql.connect({
+        "user" : MSSQL_USER,
+        "password" : MSSQL_PASSWORD,
+        "database" : MSSQL_DATABASE,
+        "server": MSSQL_SERVER
+      })
+      /*
       let pool = await sql.connect({
         "user" : "sa",
         "password" : "S@Tsql@dmin1",
         "database" : "Kors",
         "server": "10.30.1.17"
       })
-
+*/
 
       // query database
       console.log(params.query.$tableName)
@@ -46,12 +61,29 @@ exports.Sproc200206 = class Sproc200206 {
     try {
       // have problems with knex and this working at same time on linux
 //      let pool = await sql.connect(config.mssql)
+const {
+  MSSQL_USER,
+  MSSQL_PASSWORD,
+  MSSQL_DATABASE,
+  MSSQL_SERVER
+} = process.env;
+console.log(`user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`)
+let pool = await sql.connect({
+  "user" : MSSQL_USER,
+  "password" : MSSQL_PASSWORD,
+  "database" : MSSQL_DATABASE,
+  "server": MSSQL_SERVER
+})
+
+
+/*
       let pool = await sql.connect({
         "user" : "sa",
         "password" : "S@Tsql@dmin1",
         "database" : "Kors",
         "server": "10.30.1.17"
       })
+      */
       // query database
       const resultSet = await pool.request()
         .input("start_date", sql.DateTime, data.startDate)
