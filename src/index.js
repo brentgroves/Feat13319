@@ -7,7 +7,7 @@ const mqtt = require('mqtt');
 //const hostname = app.get('host');
 //const port = app.get('port');
 //const port = config.BPGServicesPort;
-const port = process.env.REACT_APP_FEATHERS_PORT;
+const port = process.env.FEATHERS_PORT;
 //const server = app.listen(port, 'localhost');
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 //const server = app.listen(port, hostname);
@@ -31,7 +31,7 @@ app.service('mstest').create({
 });
 */
 // TEST ONLY SECTION
-/*
+
   app.service('users')
     .create({
       "email": "user@buschegroup.com",
@@ -48,4 +48,3 @@ app.service('mstest').create({
     }).catch(e => {
       console.error('Authentication error', e);
     });
-*/
