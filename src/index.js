@@ -3,7 +3,7 @@ const logger = require('./logger');
 const app = require('./app');
 
 const mqtt = require('mqtt');
-const config = require('../../Config13319/config.json');
+//const config = require('../../Config13319/config.json');
 //const hostname = app.get('host');
 //const port = app.get('port');
 //const port = config.BPGServicesPort;
@@ -31,7 +31,7 @@ app.service('mstest').create({
 });
 */
 // TEST ONLY SECTION
-
+/*
   app.service('users')
     .create({
       "email": "user@buschegroup.com",
@@ -48,3 +48,4 @@ app.service('mstest').create({
     }).catch(e => {
       console.error('Authentication error', e);
     });
+*/
