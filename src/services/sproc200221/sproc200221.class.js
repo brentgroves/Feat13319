@@ -60,8 +60,6 @@ exports.Sproc200221 = class Sproc200221 {
   async create(data, params) {
     var result;
     console.log('in Sproc200221.create()');
-    const startDate = '2020-02-09T00:00:00';
-    const endDate = '2020-02-10T23:59:59';
     console.log(
       `table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
     );
@@ -84,14 +82,6 @@ exports.Sproc200221 = class Sproc200221 {
         server: MSSQL_SERVER
       });
 
-      /*
-      let pool = await sql.connect({
-        "user" : "sa",
-        "password" : "S@Tsql@dmin1",
-        "database" : "Kors",
-        "server": "10.30.1.17"
-      })
-      */
       // query database
       const resultSet = await pool
         .request()
@@ -111,7 +101,7 @@ exports.Sproc200221 = class Sproc200221 {
       record_count: result.output.record_count,
       table: data.table
     }
-    console.log(`sproc200206.class.ret: ${ret.record_count},${ret.table}`);
+    console.log(`sproc200221.class.ret: ${ret.record_count},${ret.table}`);
 //    return result.output.record_count;
     return ret;
 }
