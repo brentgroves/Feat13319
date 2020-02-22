@@ -2,7 +2,7 @@ var datetime = require('node-datetime');
 //const config = require('../../../../Config13319/config.json');
 const sql = require('mssql');
 /* eslint-disable no-unused-vars */
-exports.Sproc200206 = class Sproc200206 {
+exports.Sproc200221 = class Sproc200221 {
   constructor(options) {
     this.options = options || {};
   }
@@ -59,13 +59,12 @@ exports.Sproc200206 = class Sproc200206 {
 
   async create(data, params) {
     var result;
-    console.log('in Sproc200206.create()');
+    console.log('in Sproc200221.create()');
     const startDate = '2020-02-09T00:00:00';
     const endDate = '2020-02-10T23:59:59';
     console.log(
       `table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
     );
-
     try {
       // have problems with knex and this working at same time on linux
       //      let pool = await sql.connect(config.mssql)
@@ -94,20 +93,13 @@ exports.Sproc200206 = class Sproc200206 {
       })
       */
       // query database
-      console.log(
-        `before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
-      );
-
       const resultSet = await pool
         .request()
         .input('start_date', sql.DateTime, data.startDate)
         .input('end_date', sql.DateTime, data.endDate)
         .input('table_name', sql.VarChar(12), data.table)
         .output('record_count', sql.Int)
-        .execute('Sproc200206');
-        console.log(
-          `after request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
-        );
+        .execute('Sproc200221');
       //console.log(resultSet);
       result = resultSet;
     } catch (e) {
@@ -122,7 +114,7 @@ exports.Sproc200206 = class Sproc200206 {
     console.log(`sproc200206.class.ret: ${ret.record_count},${ret.table}`);
 //    return result.output.record_count;
     return ret;
-  }
+}
 
   async update(id, data, params) {
     return data;
