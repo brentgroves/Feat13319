@@ -1,11 +1,13 @@
 const users = require('./users/users.service.js');
 const sproc200206 = require('./sproc200206/sproc200206.service.js');
 const sproc200221 = require('./sproc200221/sproc200221.service.js');
+const sproc200311 = require('./sproc200311/sproc200311.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
   app.configure(sproc200206);
   app.configure(sproc200221);
+  app.configure(sproc200311);
 };
 /*
 module.exports = function (app) {
