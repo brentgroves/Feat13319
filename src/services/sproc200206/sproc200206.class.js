@@ -1,6 +1,8 @@
 var datetime = require('node-datetime');
 //const config = require('../../../../Config13319/config.json');
 const sql = require('mssql');
+const { getPool } = require('../../pools');
+
 /* eslint-disable no-unused-vars */
 exports.Sproc200206 = class Sproc200206 {
   constructor(options) {
@@ -20,12 +22,21 @@ exports.Sproc200206 = class Sproc200206 {
       console.log(
         `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
+
+      let pool = await getPool('kors', {
+        user: MSSQL_USER,
+        password: MSSQL_PASSWORD,
+        database: MSSQL_DATABASE,
+        server: MSSQL_SERVER
+      });      
+      /*
       let pool = await sql.connect({
         user: MSSQL_USER,
         password: MSSQL_PASSWORD,
         database: MSSQL_DATABASE,
         server: MSSQL_SERVER
       });
+      */
       /*
       let pool = await sql.connect({
         "user" : "sa",
@@ -78,13 +89,20 @@ exports.Sproc200206 = class Sproc200206 {
       console.log(
         `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
+      let pool = await getPool('kors', {
+        user: MSSQL_USER,
+        password: MSSQL_PASSWORD,
+        database: MSSQL_DATABASE,
+        server: MSSQL_SERVER
+      });      
+/*
       let pool = await sql.connect({
         user: MSSQL_USER,
         password: MSSQL_PASSWORD,
         database: MSSQL_DATABASE,
         server: MSSQL_SERVER
       });
-
+*/
       /*
       let pool = await sql.connect({
         "user" : "sa",
