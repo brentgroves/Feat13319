@@ -8,4 +8,5 @@ export MSSQL_USER="sa"
 export MSSQL_PASSWORD="S@Tsql@dmin1"
 export MSSQL_DATABASE="Kors"
 export MSSQL_SERVER="10.30.1.17"
+export MQTT="10.1.0.100"
 ( cd ~/srcnode/App13319/Feat13319 && npm run all)
