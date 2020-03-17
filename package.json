@@ -28,7 +28,7 @@
     "dev": "nodemon src/",
     "start": "node src/",
     "mocha": "mocha test/ --recursive --exit",
-    "all": "concurrently \"npm start\" \"cd ../Alarms13319 && npm start\" \"cd ../React13319 && npm start\""
+    "all": "concurrently \"npm start\" \"cd ../Alarms13319 && node app\" \"cd ../React13319 && npm start\""
   },
   "dependencies": {
     "@feathersjs/authentication": "^4.4.3",
