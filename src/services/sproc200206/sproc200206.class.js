@@ -13,21 +13,24 @@ exports.Sproc200206 = class Sproc200206 {
     const { $table, $limit, $skip } = params.query;
     console.log(params);
     try {
+
+
+      
       const {
-        MSSQL_USER,
-        MSSQL_PASSWORD,
-        MSSQL_DATABASE,
-        MSSQL_SERVER
+        KORS_USER,
+        KORS_PASSWORD,
+        KORS_DATABASE,
+        KORS_SERVER
       } = process.env;
       console.log(
-        `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
+        `user: ${KORS_USER},password: ${KORS_PASSWORD}, database: ${KORS_DATABASE}, server: ${KORS_SERVER}`
       );
 
       let pool = await getPool('kors', {
-        user: MSSQL_USER,
-        password: MSSQL_PASSWORD,
-        database: MSSQL_DATABASE,
-        server: MSSQL_SERVER
+        user: KORS_USER,
+        password: KORS_PASSWORD,
+        database: KORS_DATABASE,
+        server: KORS_SERVER
       });      
       /*
       let pool = await sql.connect({
@@ -81,19 +84,19 @@ exports.Sproc200206 = class Sproc200206 {
       // have problems with knex and this working at same time on linux
       //      let pool = await sql.connect(config.mssql)
       const {
-        MSSQL_USER,
-        MSSQL_PASSWORD,
-        MSSQL_DATABASE,
-        MSSQL_SERVER
+        KORS_USER,
+        KORS_PASSWORD,
+        KORS_DATABASE,
+        KORS_SERVER
       } = process.env;
       console.log(
-        `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
+        `user: ${KORS_USER},password: ${KORS_PASSWORD}, database: ${KORS_DATABASE}, server: ${KORS_SERVER}`
       );
       let pool = await getPool('kors', {
-        user: MSSQL_USER,
-        password: MSSQL_PASSWORD,
-        database: MSSQL_DATABASE,
-        server: MSSQL_SERVER
+        user: KORS_USER,
+        password: KORS_PASSWORD,
+        database: KORS_DATABASE,
+        server: KORS_SERVER
       });      
 /*
       let pool = await sql.connect({
