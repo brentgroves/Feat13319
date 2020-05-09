@@ -22,7 +22,7 @@ exports.Sproc200221 = class Sproc200221 {
       console.log(
         `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
-      let pool = await getPool('cm', {
+      let pool = await getPool('kors', {
         user: MSSQL_USER,
         password: MSSQL_PASSWORD,
         database: MSSQL_DATABASE,
@@ -86,7 +86,7 @@ exports.Sproc200221 = class Sproc200221 {
         `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
 
-      let pool = await getPool('cm', {
+      let pool = await getPool('kors', {
         user: MSSQL_USER,
         password: MSSQL_PASSWORD,
         database: MSSQL_DATABASE,

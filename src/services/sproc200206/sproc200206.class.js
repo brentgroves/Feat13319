@@ -14,23 +14,29 @@ exports.Sproc200206 = class Sproc200206 {
     console.log(params);
     try {
 
+/*
+      - MSSQL_USER=$MSSQL_USER
+      - MSSQL_PASSWORD=$MSSQL_PASSWORD
+      - MSSQL_DATABASE=$MSSQL_DATABASE
+      - MSSQL_SERVER=$MSSQL_SERVER
 
+*/
       
       const {
-        KORS_USER,
-        KORS_PASSWORD,
-        KORS_DATABASE,
-        KORS_SERVER
+        MSSQL_USER,
+        MSSQL_PASSWORD,
+        MSSQL_DATABASE,
+        MSSQL_SERVER
       } = process.env;
       console.log(
-        `user: ${KORS_USER},password: ${KORS_PASSWORD}, database: ${KORS_DATABASE}, server: ${KORS_SERVER}`
+        `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
 
       let pool = await getPool('kors', {
-        user: KORS_USER,
-        password: KORS_PASSWORD,
-        database: KORS_DATABASE,
-        server: KORS_SERVER
+        user: MSSQL_USER,
+        password: MSSQL_PASSWORD,
+        database: MSSQL_DATABASE,
+        server: MSSQL_SERVER
       });      
       /*
       let pool = await sql.connect({
@@ -84,19 +90,19 @@ exports.Sproc200206 = class Sproc200206 {
       // have problems with knex and this working at same time on linux
       //      let pool = await sql.connect(config.mssql)
       const {
-        KORS_USER,
-        KORS_PASSWORD,
-        KORS_DATABASE,
-        KORS_SERVER
+        MSSQL_USER,
+        MSSQL_PASSWORD,
+        MSSQL_DATABASE,
+        MSSQL_SERVER
       } = process.env;
       console.log(
-        `user: ${KORS_USER},password: ${KORS_PASSWORD}, database: ${KORS_DATABASE}, server: ${KORS_SERVER}`
+        `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
       let pool = await getPool('kors', {
-        user: KORS_USER,
-        password: KORS_PASSWORD,
-        database: KORS_DATABASE,
-        server: KORS_SERVER
+        user: MSSQL_USER,
+        password: MSSQL_PASSWORD,
+        database: MSSQL_DATABASE,
+        server: MSSQL_SERVER
       });      
 /*
       let pool = await sql.connect({
@@ -110,7 +116,7 @@ exports.Sproc200206 = class Sproc200206 {
       let pool = await sql.connect({
         "user" : "sa",
         "password" : "S@Tsql@dmin1",
-        "database" : "Kors",
+        "database" : "MSSQL",
         "server": "10.30.1.17"
       })
       */
