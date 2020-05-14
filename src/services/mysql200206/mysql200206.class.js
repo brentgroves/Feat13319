@@ -1,6 +1,6 @@
 var datetime = require('node-datetime');
 //const config = require('../../../../Config13319/config.json');
-const { getPool } = require('../../pools/mysql');
+const { makeDb } = require('../../pools/mysql');
 const mysql = require('mysql');
 const util = require( 'util' );
 
@@ -69,7 +69,7 @@ exports.Mysql200206 = class Mysql200206 {
    */
 
 //  var pool = cluster.of('master');
-
+/*
   let pool = await getPool('kors', {
     connectionLimit : 10,
     host            : KORS_SERVER,
@@ -77,7 +77,7 @@ exports.Mysql200206 = class Mysql200206 {
     password        : KORS_PASSWORD,
     database        : KORS_DATABASE
  });      
-
+*/
  /*
     query( sql, args ) {
       return util.promisify( connection.query )
@@ -87,20 +87,41 @@ exports.Mysql200206 = class Mysql200206 {
  //return util.promisify( connection.query )
  //.call( connection, sql, args );
  //const someRows = await db.query( 'SELECT * FROM some_table' );
-
+/*
   function query(sql,args) {
     return util.promisify( pool.query)
     .call(pool,sql,args);
   }
+
   const someRows = await query( 'select Data_hour AS solution from HourlyOEEValues' );
   console.log('The solution is: ', someRows);
+  */
   /*
   pool.query('select Data_hour AS solution from HourlyOEEValues', function (error, results, fields) {
     if (error) throw error;
     console.log('The solution is: ', results[0].solution);
   })   
   */
+ const db = makeDb( 'Kors',{
+  connectionLimit : 10,
+  host            : KORS_SERVER,
+  user            : KORS_USERNAME,
+  password        : KORS_PASSWORD,
+  database        : KORS_DATABASE
+} );
+ try {
+   const someRows = await db.query( 'select Data_hour AS solution from HourlyOEEValues' );
+//   const otherRows = await db.query( 'SELECT * FROM other_table' );
+console.log('The solution is: ', someRows[0].solution);
 
+   // do something with someRows and otherRows
+ } catch ( err ) {
+   // handle the error
+   console.log(`Error =>${err}`);
+ } finally {
+   console.log('In query finally');
+   //  await db.close();
+ }
     return ['test'];
   }
 

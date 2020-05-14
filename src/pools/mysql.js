@@ -18,7 +18,7 @@ poolCluster.add('MASTER', masterConfig); // add a named configuration
 poolCluster.add('SLAVE1', slave1Config);
 poolCluster.add('SLAVE2', slave2Config);
 */
-
+// https://codeburst.io/node-js-mysql-and-async-await-6fb25b01b628
 function makeDb( name, config ) {
   var cluster={};
   var pools={};
@@ -32,12 +32,12 @@ function makeDb( name, config ) {
     // but we still want to be able to access it and have it's this
     // object point to the cluster.
 
-        const end = cluster.end.bind(cluster)
+        const end = cluster.end.bind(cluster);
     
         cluster.end = (...args) => {
           pools={};
       // we are going to call the original end() method after we 
-      // delect all of the pool names from the pools array.
+      // delete all of the pool names from the pools array.
 
           return end(...args);
         };
