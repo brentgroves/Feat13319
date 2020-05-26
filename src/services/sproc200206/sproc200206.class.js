@@ -124,7 +124,12 @@ exports.Sproc200206 = class Sproc200206 {
       console.log(
         `before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
       );
-
+      /*
+      console.log('list params');
+      console.log(Object.getOwnPropertyNames(params)); 
+      console.log('list data');
+      console.log(Object.getOwnPropertyNames(data));
+      */
       const resultSet = await pool
         .request()
         .input('start_date', sql.DateTime, data.startDate)

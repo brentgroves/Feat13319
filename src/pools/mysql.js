@@ -1,6 +1,6 @@
 // https://www.npmjs.com/package/mysql
-const sql = require('mysql');
-const util = require( 'util' );
+const sql = require("mysql");
+const util = require("util");
 
 //var cluster={};
 //const pools={};
@@ -19,32 +19,35 @@ poolCluster.add('SLAVE1', slave1Config);
 poolCluster.add('SLAVE2', slave2Config);
 */
 // https://codeburst.io/node-js-mysql-and-async-await-6fb25b01b628
-function makeDb( name, config ) {
-  var cluster={};
-  var pools={};
+// THIS IS NEEDED BECAUSE THE STANDARD NODE MYSQL DRIVER DOES NOT IMPLEMENT 
+// A PROMISE INTERFACE AND THE MYSQL2 DRIVER THAT DOES IMPLEMENT THE INTERFACE
+// IS MISSING CLUSTER SUPPORT AT THE TIME: 05/26/20
+function makeDb(name, config) {
+  var cluster = {};
+  var pools = {};
 
-  if (Object.keys(cluster).length === 0){
+  if (Object.keys(cluster).length === 0) {
     //    const createPoolCluster = util.promisify( sql.createPoolCluster);
     //    cluster = await createPoolCluster();
     console.log("before sql.createPoolCluster()");
-        cluster = sql.createPoolCluster();
+    cluster = sql.createPoolCluster();
     // we are going to replace the original objects end method,
     // but we still want to be able to access it and have it's this
     // object point to the cluster.
 
-        const end = cluster.end.bind(cluster);
-    
-        cluster.end = (...args) => {
-          pools={};
-      // we are going to call the original end() method after we 
+    const end = cluster.end.bind(cluster);
+
+    cluster.end = (...args) => {
+      pools = {};
+      // we are going to call the original end() method after we
       // delete all of the pool names from the pools array.
 
-          return end(...args);
-        };
-    }
-    if (!Object.prototype.hasOwnProperty.call(pools, name)) {
-      console.log("before cluster.add(name,config)");
-      /*
+      return end(...args);
+    };
+  }
+  if (!Object.prototype.hasOwnProperty.call(pools, name)) {
+    console.log("before cluster.add(name,config)");
+    /*
           pools.add(name, { 
             connectionLimit : 10,
             host            : KORS_SERVER,
@@ -53,21 +56,24 @@ function makeDb( name, config ) {
             database        : KORS_DATABASE
           });
           */
-          cluster.add(name,config); // add a named pool
-          pools[name] = name;  // keep track of all named pools
-    }
-//        var pool = cluster.of(name);  //return the specific pool
-      
-//        return pool;
-//      }          
+    cluster.add(name, config); // add a named pool
+    pools[name] = name; // keep track of all named pools
+  }
+  //        var pool = cluster.of(name);  //return the specific pool
+
+  //        return pool;
+  //      }
   return {
-    query( sql, args ) {
-      return util.promisify( cluster.of(name).query )
-        .call( cluster.of(name), sql, args );
+    query(sql, args) {
+      // console.log(`before query => sql = ${sql}, args= ${args}`);
+
+      return util
+        .promisify(cluster.of(name).query)
+        .call(cluster.of(name), sql, args);
     },
     end() {
-      return util.promisify( cluster.end ).call( cluster );
-    }
+      return util.promisify(cluster.end).call(cluster);
+    },
   };
 }
 /*
@@ -134,5 +140,5 @@ module.exports = {
 */
 
 module.exports = {
-  makeDb
-}
+  makeDb,
+};

@@ -1,11 +1,11 @@
-
+const GenTableName = require('../../hooks/GenTableName');
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [GenTableName()],
     update: [],
     patch: [],
     remove: []
