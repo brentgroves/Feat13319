@@ -6,22 +6,14 @@ const {
   KORS_PASSWORD,
   KORS_DATABASE,
 } = process.env;
-/*
-cluster.add("master", { 
-  connectionLimit : 10,
-  host            : KORS_SERVER,
-  user            : KORS_USERNAME,
-  password        : KORS_PASSWORD,
-  database        : KORS_DATABASE
-});
-*/
+
 /* eslint-disable no-unused-vars */
-exports.Mysql200206 = class Mysql200206 {
-  constructor(options) {
+exports.Mysql200221 = class Mysql200221 {
+  constructor (options) {
     this.options = options || {};
   }
 
-  async find(params) {
+  async find (params) {
     let someRows;
     const { $table, $limit, $skip } = params.query;
     console.log(`start of find: ${params}`);
@@ -55,14 +47,13 @@ exports.Mysql200206 = class Mysql200206 {
     return someRows;
   }
 
-  async get(id, params) {
+  async get (id, params) {
     return {
-      id,
-      text: `A new message with ID: ${id}!`,
+      id, text: `A new message with ID: ${id}!`
     };
   }
 
-  async create(data, params) {
+  async create (data, params) {
     const {
       KORS_SERVER,
       KORS_USERNAME,
@@ -93,8 +84,8 @@ exports.Mysql200206 = class Mysql200206 {
       */
       //   const otherRows = await db.query( 'SELECT * FROM other_table' );
       //var pRecordCount = 1;
-      const someRows = await db.query('call Sproc200206(?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[data.startDate,data.endDate,data.table]);
-//      const someRows = await db.query('call Sproc200206("2020-03-01 00:00:00","2020-04-04 23:59:59", "TempTable",@pRecordCount); select @pRecordCount as pRecordCount');
+      const someRows = await db.query('call Sproc200221(?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[data.startDate,data.endDate,data.table]);
+//      const someRows = await db.query('call Sproc200221("2020-03-01 00:00:00","2020-04-04 23:59:59", "TempTable",@pRecordCount); select @pRecordCount as pRecordCount');
       console.log("The solution is: ", someRows[1][0].pRecordCount);
 //      console.log("The solution is: ", someRows[0].solution);
       ret = {
@@ -114,24 +105,17 @@ exports.Mysql200206 = class Mysql200206 {
 
 
     return ret;
-
-/*
-    if (Array.isArray(data)) {
-      return Promise.all(data.map((current) => this.create(current, params)));
-    }
-    return data;
-    */
   }
 
-  async update(id, data, params) {
+  async update (id, data, params) {
     return data;
   }
 
-  async patch(id, data, params) {
+  async patch (id, data, params) {
     return data;
   }
 
-  async remove(id, params) {
+  async remove (id, params) {
     return { id };
   }
 };
