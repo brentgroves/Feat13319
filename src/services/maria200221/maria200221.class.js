@@ -7,9 +7,8 @@ const {
   KORS_PASSWORD,
   KORS_DATABASE,
 } = process.env;
-
 /* eslint-disable no-unused-vars */
-exports.Maria200206 = class Maria200206 {
+exports.Maria200221 = class Maria200221 {
   constructor (options) {
     this.options = options || {};
   }
@@ -47,15 +46,6 @@ exports.Maria200206 = class Maria200206 {
   }
 
   async create (data, params) {
-    const {
-      KORS_SERVER,
-      KORS_USERNAME,
-      KORS_PASSWORD,
-      KORS_DATABASE,
-    } = process.env;
-    //console.log(`user: ${KORS_USERNAME},password: ${KORS_PASSWORD}, database: ${KORS_DATABASE}, hostname: ${KORS_SERVER}`);
-    //console.log(`before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}` );
-
     let pool = await getPool('kors', {
       connectionLimit: 10,
       multipleStatements: true,
@@ -68,7 +58,7 @@ exports.Maria200206 = class Maria200206 {
  
     var ret;
     try {
-      const someRows = await pool.query('call Sproc200206(?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[data.startDate,data.endDate,data.table]);
+      const someRows = await pool.query('call Sproc200221(?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[data.startDate,data.endDate,data.table]);
       console.log("The solution is: ", someRows[1][0].pRecordCount);
       ret = {
         record_count: someRows[1][0].pRecordCount,

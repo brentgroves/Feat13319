@@ -5,6 +5,7 @@ const sproc200311 = require('./sproc200311/sproc200311.service.js');
 const mysql200206 = require('./mysql200206/mysql200206.service.js');
 const mysql200221 = require('./mysql200221/mysql200221.service.js');
 const maria200206 = require('./maria200206/maria200206.service.js');
+const maria200221 = require('./maria200221/maria200221.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -14,6 +15,7 @@ module.exports = function (app) {
   app.configure(mysql200206);
   app.configure(mysql200221);
   app.configure(maria200206);
+  app.configure(maria200221);
 };
 /*
 module.exports = function (app) {
