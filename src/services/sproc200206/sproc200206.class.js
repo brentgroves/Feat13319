@@ -1,7 +1,7 @@
-var datetime = require('node-datetime');
+var datetime = require("node-datetime");
 //const config = require('../../../../Config13319/config.json');
-const sql = require('mssql');
-const { getPool } = require('../../pools');
+const sql = require("mssql");
+const { getPool } = require("../../pools");
 
 /* eslint-disable no-unused-vars */
 exports.Sproc200206 = class Sproc200206 {
@@ -13,31 +13,30 @@ exports.Sproc200206 = class Sproc200206 {
     const { $table, $limit, $skip } = params.query;
     console.log(params);
     try {
-
-/*
+      /*
       - MSSQL_USER=$MSSQL_USER
       - MSSQL_PASSWORD=$MSSQL_PASSWORD
       - MSSQL_DATABASE=$MSSQL_DATABASE
       - MSSQL_SERVER=$MSSQL_SERVER
 
 */
-      
+
       const {
         MSSQL_USER,
         MSSQL_PASSWORD,
         MSSQL_DATABASE,
-        MSSQL_SERVER
+        MSSQL_SERVER,
       } = process.env;
       console.log(
         `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
 
-      let pool = await getPool('kors', {
+      let pool = await getPool("kors", {
         user: MSSQL_USER,
         password: MSSQL_PASSWORD,
         database: MSSQL_DATABASE,
-        server: MSSQL_SERVER
-      });      
+        server: MSSQL_SERVER,
+      });
       /*
       let pool = await sql.connect({
         user: MSSQL_USER,
@@ -66,22 +65,22 @@ exports.Sproc200206 = class Sproc200206 {
       console.dir(resultSet);
       return resultSet.recordset;
     } catch (e) {
-      console.log('caught exception!', e);
+      console.log("caught exception!", e);
     }
   }
 
   async get(id, params) {
     return {
       id,
-      text: `A new message with ID: ${id}!`
+      text: `A new message with ID: ${id}!`,
     };
   }
 
   async create(data, params) {
     var result;
-    console.log('in Sproc200206.create()');
-    const startDate = '2020-02-09T00:00:00';
-    const endDate = '2020-02-10T23:59:59';
+    console.log("in Sproc200206.create()");
+    const startDate = "2020-02-09T00:00:00";
+    const endDate = "2020-02-10T23:59:59";
     console.log(
       `table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
     );
@@ -93,33 +92,17 @@ exports.Sproc200206 = class Sproc200206 {
         MSSQL_USER,
         MSSQL_PASSWORD,
         MSSQL_DATABASE,
-        MSSQL_SERVER
+        MSSQL_SERVER,
       } = process.env;
       console.log(
         `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
-      let pool = await getPool('kors', {
+      let pool = await getPool("kors", {
         user: MSSQL_USER,
         password: MSSQL_PASSWORD,
         database: MSSQL_DATABASE,
-        server: MSSQL_SERVER
-      });      
-/*
-      let pool = await sql.connect({
-        user: MSSQL_USER,
-        password: MSSQL_PASSWORD,
-        database: MSSQL_DATABASE,
-        server: MSSQL_SERVER
+        server: MSSQL_SERVER,
       });
-*/
-      /*
-      let pool = await sql.connect({
-        "user" : "sa",
-        "password" : "S@Tsql@dmin1",
-        "database" : "MSSQL",
-        "server": "10.30.1.17"
-      })
-      */
       // query database
       console.log(
         `before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
@@ -132,27 +115,27 @@ exports.Sproc200206 = class Sproc200206 {
       */
       const resultSet = await pool
         .request()
-        .input('start_date', sql.DateTime, data.startDate)
-        .input('end_date', sql.DateTime, data.endDate)
-        .input('table_name', sql.VarChar(12), data.table)
-        .output('record_count', sql.Int)
-        .execute('Sproc200206');
-        console.log(
-          `after request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
-        );
+        .input("start_date", sql.DateTime, data.startDate)
+        .input("end_date", sql.DateTime, data.endDate)
+        .input("table_name", sql.VarChar(12), data.table)
+        .output("record_count", sql.Int)
+        .execute("Sproc200206");
+      console.log(
+        `after request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
+      );
       //console.log(resultSet);
       result = resultSet;
     } catch (e) {
-      console.log('caught exception!', e);
+      console.log("caught exception!", e);
     }
     //console.log(result);
     let ret;
     ret = {
       record_count: result.output.record_count,
-      table: data.table
-    }
+      table: data.table,
+    };
     console.log(`sproc200206.class.ret: ${ret.record_count},${ret.table}`);
-//    return result.output.record_count;
+    //    return result.output.record_count;
     return ret;
   }
 
