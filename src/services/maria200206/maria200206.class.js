@@ -1,5 +1,4 @@
-const sql = require('mariadb');
-const { getPool } = require('../../pools/maria');
+const mariadb = require("mariadb");
 
 const {
   KORS_SERVER,
@@ -7,6 +6,15 @@ const {
   KORS_PASSWORD,
   KORS_DATABASE,
 } = process.env;
+
+const pool = mariadb.createPool( {
+  connectionLimit: 5,
+  multipleStatements: true,
+  host: KORS_SERVER,
+  user: KORS_USERNAME,
+  password: KORS_PASSWORD,
+  database: KORS_DATABASE,
+});
 
 /* eslint-disable no-unused-vars */
 exports.Maria200206 = class Maria200206 {
@@ -16,26 +24,17 @@ exports.Maria200206 = class Maria200206 {
 
   async find (params) {
     let rows;
+    let conn;
     const { $table, $limit, $skip } = params.query;
-//    console.log(`start of find: ${params}`);
-//    console.log(`JSON.stringify: ${JSON.stringify(params.query)}`);
-    console.log(`params.query.$table=>${params.query.$table}`);
+//    console.log(`params.query.$table=>${params.query.$table}`);
     try {
       // console.log(`user: ${KORS_USERNAME},password: ${KORS_PASSWORD}, database: ${KORS_DATABASE}, server: ${KORS_SERVER}`);
-
-      let pool = await getPool('kors', {
-        connectionLimit: 10,
-        multipleStatements: true,
-        host: KORS_SERVER,
-        user: KORS_USERNAME,
-        password: KORS_PASSWORD,
-        database: KORS_DATABASE,
-      });      
-      // query database
-      rows = await pool.query(`select * from ${$table} ORDER BY primary_key LIMIT ${$limit} OFFSET ${$skip}`);
-      // console.log(rows); //[ {val: 1}, meta: ... ]
+      conn = await pool.getConnection();      
+      rows = await conn.query(`select * from ${$table} ORDER BY primary_key LIMIT ${$limit} OFFSET ${$skip}`);
     } catch (e) {
-      console.log('caught exception!', e);
+      console.log("caught exception!", e);
+    } finally {
+      if (conn) conn.release(); //release to pool
     }
     return rows;
   }
@@ -47,29 +46,14 @@ exports.Maria200206 = class Maria200206 {
   }
 
   async create (data, params) {
-    const {
-      KORS_SERVER,
-      KORS_USERNAME,
-      KORS_PASSWORD,
-      KORS_DATABASE,
-    } = process.env;
+    let ret;
+    let conn;
     //console.log(`user: ${KORS_USERNAME},password: ${KORS_PASSWORD}, database: ${KORS_DATABASE}, hostname: ${KORS_SERVER}`);
     //console.log(`before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}` );
 
-    let pool = await getPool('kors', {
-      connectionLimit: 10,
-      multipleStatements: true,
-      host: KORS_SERVER,
-      user: KORS_USERNAME,
-      password: KORS_PASSWORD,
-      database: KORS_DATABASE,
-    });      
-    // query database
- 
-    var ret;
     try {
       const someRows = await pool.query('call Sproc200206(?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[data.startDate,data.endDate,data.table]);
-      console.log("The solution is: ", someRows[1][0].pRecordCount);
+      //console.log("The solution is: ", someRows[1][0].pRecordCount);
       ret = {
         record_count: someRows[1][0].pRecordCount,
         table: data.table
@@ -78,13 +62,11 @@ exports.Maria200206 = class Maria200206 {
       // handle the error
       console.log(`Error =>${err}`);
     } finally {
-      console.log("In query finally");
-      console.log("The ret is: ", ret);
-
-      //  await db.close();
+      if (conn) {
+        conn.release(); //release to pool
+       // console.log(`In finally=>released connection`);
+      }
     }
-
-
     return ret;  
   }
 
