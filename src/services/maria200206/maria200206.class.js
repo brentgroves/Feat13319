@@ -53,9 +53,8 @@ exports.Maria200206 = class Maria200206 {
     //console.log(`user: ${KORS_USERNAME},password: ${KORS_PASSWORD}, database: ${KORS_DATABASE}, hostname: ${KORS_SERVER}`);
 //    let startDate = data.startDate.toISOString();
 //    let endDate = data.endDate.toISOString();
-    console.log(`before request(), table: ${data.table}, startDate: ${startDate}, endDate: ${endDate}` );
-//    console.log(`before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}` );
-    return ["test"];
+//    console.log(`before request(), table: ${data.table}, startDate: ${startDate}, endDate: ${endDate}` );
+    console.log(`before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}` );
     try {
       const someRows = await pool.query('call Sproc200206(?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[data.startDate,data.endDate,data.table]);
       //console.log("The solution is: ", someRows[1][0].pRecordCount);
