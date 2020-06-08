@@ -1,4 +1,6 @@
 const mariadb = require("mariadb");
+//var jstz = require('jstz');
+//var moment = require('moment');
 
 const {
   KORS_SERVER,
@@ -49,8 +51,11 @@ exports.Maria200206 = class Maria200206 {
     let ret;
     let conn;
     //console.log(`user: ${KORS_USERNAME},password: ${KORS_PASSWORD}, database: ${KORS_DATABASE}, hostname: ${KORS_SERVER}`);
-    //console.log(`before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}` );
-
+//    let startDate = data.startDate.toISOString();
+//    let endDate = data.endDate.toISOString();
+    console.log(`before request(), table: ${data.table}, startDate: ${startDate}, endDate: ${endDate}` );
+//    console.log(`before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}` );
+    return ["test"];
     try {
       const someRows = await pool.query('call Sproc200206(?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[data.startDate,data.endDate,data.table]);
       //console.log("The solution is: ", someRows[1][0].pRecordCount);
