@@ -56,7 +56,8 @@ exports.Maria200206 = class Maria200206 {
 //    console.log(`before request(), table: ${data.table}, startDate: ${startDate}, endDate: ${endDate}` );
     console.log(`before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}` );
     try {
-      const someRows = await pool.query('call Sproc200206(?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[data.startDate,data.endDate,data.table]);
+      conn = await pool.getConnection();      
+      const someRows = await conn.query('call Sproc200206(?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[data.startDate,data.endDate,data.table]);
       //console.log("The solution is: ", someRows[1][0].pRecordCount);
       ret = {
         record_count: someRows[1][0].pRecordCount,
@@ -66,10 +67,7 @@ exports.Maria200206 = class Maria200206 {
       // handle the error
       console.log(`Error =>${err}`);
     } finally {
-      if (conn) {
-        conn.release(); //release to pool
-       // console.log(`In finally=>released connection`);
-      }
+      if (conn) conn.release(); //release to pool
     }
     return ret;  
   }
