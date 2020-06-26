@@ -16,6 +16,7 @@ server.on('listening', () =>
 );
 
 // TEST ONLY SECTION
+/*
 app
   .service('users')
   .create({
@@ -33,3 +34,4 @@ app
   .catch(e => {
     console.error('Authentication error', e);
   });
+*/
