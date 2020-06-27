@@ -31,6 +31,7 @@
     "all": "concurrently \"npm start\" \"cd ../Alarms13319 && ./start.sh\" \"cd ../React13319 && npm start\""
   },
   "dependencies": {
+    "@bgroves/common": "^1.1.0",
     "@feathersjs/authentication": "^4.4.3",
     "@feathersjs/authentication-local": "^4.4.3",
     "@feathersjs/authentication-oauth": "^4.4.3",

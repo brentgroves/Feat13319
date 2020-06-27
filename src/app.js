@@ -20,6 +20,7 @@ const authentication = require('./authentication');
 
 const sequelize = require('./sequelize');
 
+const mqtt = require('./mqtt/index');
 
 const app = express(feathers());
 
@@ -55,5 +56,8 @@ app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
+
+// Initialize MQTT
+mqtt(app);
 
 module.exports = app;
