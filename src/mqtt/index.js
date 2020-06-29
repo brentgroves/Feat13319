@@ -18,15 +18,36 @@ module.exports = function (app) {
   // message is a buffer
   mqttClient.on('message', function (topic, message) {
     const p = JSON.parse(message.toString()); // payload is a buffer
-    common.log(`Feat13319 MQTT message => ${message.toString()}`);
-    console.log(`Topic is: ${topic}`);
     // let msg;
     if ('Kep13319' == topic) {
-      common.log('Feat13319=>Kep13319 message');
-      //  msg = `${p.TransDate}, Work Center: ${p.WorkCenter},${p.NodeId},${p.Cycle_Counter_Shift_SL}`;
-      //   app.service('Kep13318').create({
-      //     text: msg,
-      //   });
+      app
+        .service('kep13319')
+        .update(p.updateId, { value: p.value })
+        .then(async (res) => {
+          common.log(`updated kep13319 updateId=${p.updateId}, value=${p.value}`);
+        })
+        .catch((e) => {
+          console.error('Authentication error', e);
+        });
     }
   });
 };
+/*
+app
+  .service('users')
+  .create({
+    email: 'user@buschegroup.com',
+    password: 'password',
+    userName: 'bgroves',
+    firstName: 'Brent',
+    lastName: 'Groves',
+    isAdmin: true,
+    roles: ['Admin', 'Manager', 'Quality']
+  })
+  .then(async res => {
+    console.log('created user!');
+  })
+  .catch(e => {
+    console.error('Authentication error', e);
+  });
+*/

@@ -17,6 +17,17 @@ server.on('listening', () =>
 
 // TEST ONLY SECTION
 /*
+app.
+  service('kep13319')
+  .update(0,{ Value: 42 })
+  .then(async res => {
+    console.log('updated Kep13319');
+  })
+  .catch(e => {
+    console.error('Authentication error', e);
+  });
+  */
+/*
 app
   .service('users')
   .create({
