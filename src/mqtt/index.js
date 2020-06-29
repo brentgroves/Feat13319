@@ -22,7 +22,7 @@ module.exports = function (app) {
     if ('Kep13319' == topic) {
       app
         .service('kep13319')
-        .update(p.updateId, { value: p.value })
+        .update(p.updateId, { updateId:p.updateId,value: p.value })
         .then(async (res) => {
           common.log(`updated kep13319 updateId=${p.updateId}, value=${p.value}`);
         })
