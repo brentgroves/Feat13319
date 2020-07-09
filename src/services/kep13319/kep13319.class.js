@@ -14,9 +14,10 @@ exports.Kep13319 = class Kep13319 {
     return config.nodes;
   }
   async update (id, data, params) {
-    let msg = JSON.stringify(data);
-    common.log(`Feat13319.Kep13319.update: id=${id}, data.value=${data.value}`);
+    //let msg = JSON.stringify(data);
+    common.log(`Feat13319.Kep13319.update: id=${id}, data.value=${data.value}, date.transDate=${data.transDate}`);
     config.nodes[id].value=data.value;
+    config.nodes[id].transDate=data.transDate;
     return data;
   }
 /* 

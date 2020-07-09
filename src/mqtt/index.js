@@ -18,13 +18,14 @@ module.exports = function (app) {
   // message is a buffer
   mqttClient.on('message', function (topic, message) {
     const p = JSON.parse(message.toString()); // payload is a buffer
+    common.log(`Feat13319.mqtt=>${p}`);
     // let msg;
     if ('Kep13319' == topic) {
       app
         .service('kep13319')
-        .update(p.updateId, { updateId:p.updateId,value: p.value })
+        .update(p.updateId, { updateId:p.updateId,value: p.value,transDate: p.transDate })
         .then(async (res) => {
-          common.log(`updated kep13319 updateId=${p.updateId}, value=${p.value}`);
+          common.log(`updated kep13319 updateId=${p.updateId}, value=${p.value}. transDate=${p.transDate}`);
         })
         .catch((e) => {
           console.error('Authentication error', e);
