@@ -2,6 +2,8 @@ var datetime = require("node-datetime");
 //const config = require('../../../../Config13319/config.json');
 const sql = require("mssql");
 const { getPool } = require("../../pools");
+const common = require('@bgroves/common');
+
 
 /* eslint-disable no-unused-vars */
 exports.Sproc200206 = class Sproc200206 {
@@ -11,7 +13,7 @@ exports.Sproc200206 = class Sproc200206 {
 
   async find(params) {
     const { $table, $limit, $skip } = params.query;
-    console.log(params);
+    common.log(params);
     try {
       /*
       - MSSQL_USER=$MSSQL_USER
@@ -27,7 +29,7 @@ exports.Sproc200206 = class Sproc200206 {
         MSSQL_DATABASE,
         MSSQL_SERVER,
       } = process.env;
-      console.log(
+      common.log(
         `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
 
@@ -55,7 +57,7 @@ exports.Sproc200206 = class Sproc200206 {
 */
 
       // query database
-      console.log(params.query.$table);
+      common.log(params.query.$table);
 
       let resultSet = await pool
         .request()
@@ -65,7 +67,7 @@ exports.Sproc200206 = class Sproc200206 {
       console.dir(resultSet);
       return resultSet.recordset;
     } catch (e) {
-      console.log("caught exception!", e);
+      common.log("caught exception!", e);
     }
   }
 
@@ -78,10 +80,10 @@ exports.Sproc200206 = class Sproc200206 {
 
   async create(data, params) {
     var result;
-    console.log("in Sproc200206.create()");
+    common.log("in Sproc200206.create()");
     const startDate = "2020-02-09T00:00:00";
     const endDate = "2020-02-10T23:59:59";
-    console.log(
+    common.log(
       `table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
     );
 
@@ -94,7 +96,7 @@ exports.Sproc200206 = class Sproc200206 {
         MSSQL_DATABASE,
         MSSQL_SERVER,
       } = process.env;
-      console.log(
+      common.log(
         `user: ${MSSQL_USER},password: ${MSSQL_PASSWORD}, database: ${MSSQL_DATABASE}, server: ${MSSQL_SERVER}`
       );
       let pool = await getPool("kors", {
@@ -104,14 +106,14 @@ exports.Sproc200206 = class Sproc200206 {
         server: MSSQL_SERVER,
       });
       // query database
-      console.log(
+      common.log(
         `before request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
       );
       /*
-      console.log('list params');
-      console.log(Object.getOwnPropertyNames(params)); 
-      console.log('list data');
-      console.log(Object.getOwnPropertyNames(data));
+      common.log('list params');
+      common.log(Object.getOwnPropertyNames(params)); 
+      common.log('list data');
+      common.log(Object.getOwnPropertyNames(data));
       */
       const resultSet = await pool
         .request()
@@ -120,21 +122,21 @@ exports.Sproc200206 = class Sproc200206 {
         .input("table_name", sql.VarChar(12), data.table)
         .output("record_count", sql.Int)
         .execute("Sproc200206");
-      console.log(
+      common.log(
         `after request(), table: ${data.table}, startDate: ${data.startDate}, endDate: ${data.endDate}`
       );
-      //console.log(resultSet);
+      //common.log(resultSet);
       result = resultSet;
     } catch (e) {
-      console.log("caught exception!", e);
+      common.log("caught exception!", e);
     }
-    //console.log(result);
+    //common.log(result);
     let ret;
     ret = {
       record_count: result.output.record_count,
       table: data.table,
     };
-    console.log(`sproc200206.class.ret: ${ret.record_count},${ret.table}`);
+    common.log(`sproc200206.class.ret: ${ret.record_count},${ret.table}`);
     //    return result.output.record_count;
     return ret;
   }
