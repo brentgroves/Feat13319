@@ -42,16 +42,16 @@ exports.CompareContainer = class CompareContainer {
     try {
       conn = await pool.getConnection();      
       const someRows = await conn.query('call CompareContainerFetch(?,?,?,?,@pRecordCount); select @pRecordCount as pRecordCount',[$startDate, $endDate, $limit, $skip]);
-      console.log(`someRows[0] =>${someRows[0]}`);
-      console.log(`someRows[1] =>${someRows[1]}`);
-      console.log(`someRows[2] =>${someRows[2]}`);
+      // common.log(`someRows[0] =>${someRows[0]}`);
+      // common.log(`someRows[1] =>${someRows[1]}`);
+      // common.log(`someRows[2] =>${someRows[2]}`);
       ret = {
         record_count: someRows[2][0].pRecordCount,
         data: someRows[0]
       };
     } catch (err) {
       // handle the error
-      console.log(`Error =>${err}`);
+      common.log(`Error =>${err}`);
     } finally {
       if (conn) {
         conn.release(); //release to pool
@@ -65,16 +65,16 @@ exports.CompareContainer = class CompareContainer {
     let rows;
     let conn;
     const { $limit, $skip, $startDate, $endDate } = params.query;
-    //    console.log(`start of find: ${params}`);
-    //    console.log(`JSON.stringify: ${JSON.stringify(params.query)}`);
-    // console.log(`params.query.$table=>${params.query.$table}`);
+    //    common.log(`start of find: ${params}`);
+    //    common.log(`JSON.stringify: ${JSON.stringify(params.query)}`);
+    // common.log(`params.query.$table=>${params.query.$table}`);
     try {
       common.log(`CompareContainer=> startDate: ${$startDate}, endDate: ${$endDate}, limit: ${$limit},offset: ${$skip}`);
       const sql = `select * from CompareContainer where transDate between '${$startDate}' and '${$endDate}' ORDER BY CompareContainer_Key LIMIT ${$limit} OFFSET ${$skip}`;
       common.log(`sql=>${sql}`);
       conn = await pool.getConnection();      
       rows = await conn.query(sql);
-      // console.log(rows); //[ {val: 1}, meta: ... ]
+      // common.log(rows); //[ {val: 1}, meta: ... ]
     } catch (e) {
       common.log(`caught exception! ${e}`);
     } finally {
