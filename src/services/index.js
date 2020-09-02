@@ -9,6 +9,7 @@ const maria200221 = require('./maria200221/maria200221.service.js');
 const kep13319 = require('./kep13319/kep13319.service.js');
 const compareContainer = require('./compare-container/compare-container.service.js');
 const partProdRate = require('./part-prod-rate/part-prod-rate.service.js');
+const upcomingToolChanges = require('./upcoming-tool-changes/upcoming-tool-changes.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -22,6 +23,7 @@ module.exports = function (app) {
   app.configure(kep13319);
   app.configure(compareContainer);
   app.configure(partProdRate);
+  app.configure(upcomingToolChanges);
 };
 /*
 module.exports = function (app) {
