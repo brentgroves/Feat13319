@@ -13,11 +13,15 @@ exports.Kep13319 = class Kep13319 {
 
     return config.nodes;
   }
-  async update (id, data, params) {
+  async update (updateId, data, params) {
     //let msg = JSON.stringify(data);
-    common.log(`Feat13319.Kep13319.update: id=${id}, data.value=${data.value}, date.transDate=${data.transDate}`);
-    config.nodes[id].value=data.value;
-    config.nodes[id].transDate=data.transDate;
+    common.log(`Feat13319.Kep13319.update: updateId=${updateId}, data.value=${data.value}, date.transDate=${data.transDate}`);
+    var foundIndex = config.nodes.findIndex(node => node.updateId == updateId);
+    config.nodes[foundIndex].value = data.value;
+    config.nodes[foundIndex].transDate=data.transDate;
+    // BUG Fix: updateId is not the same as index.
+    // config.nodes[id].value=data.value;
+    // config.nodes[id].transDate=data.transDate;
     return data;
   }
 /* 
