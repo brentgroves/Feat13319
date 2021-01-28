@@ -1,7 +1,7 @@
 const mqtt = require('mqtt');
 //const mysql = require('mysql2/promise');
 var datetime = require('node-datetime');
-const config = require('../../../../Config13318/config.json');
+const config = require('../../../config/config.json');
 const sql = require('mssql');
 /* eslint-disable no-unused-vars */
 exports.Sproc200206 = class Sproc200206 {

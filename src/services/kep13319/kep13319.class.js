@@ -1,4 +1,4 @@
-const config = require('../../../../Config13319/config.json');
+const config = require('../../../config/config.json');
 const common = require('@bgroves/common');
 
 /* eslint-disable no-unused-vars */
