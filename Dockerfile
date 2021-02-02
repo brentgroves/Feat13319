@@ -1,5 +1,5 @@
 FROM node:14-alpine
-
+# FROM node:lts-alpine
 # Semantic Version: Major.Minor.Patch
 # Version: 1.0.0
 
